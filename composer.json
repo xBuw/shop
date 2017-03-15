@@ -1,0 +1,21 @@
+{
+  "name": "xbuw/shop",
+  "description": "shop",
+  "minimum-stability": "dev",
+  "license": "free",
+  "authors": [
+    {
+      "name": "xBuw",
+      "email": "kirichenko_s@bk.ru"
+    }
+  ],
+  "require": {
+    "xbuw/framework": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/home/projects/test-framework"
+    }
+  ]
+}
