@@ -17,7 +17,7 @@ use xbuw\framework\Response\Response;
  */
 class ProductController extends Controller
 {
-    public function getOneProduct($id, $var){
-        return $this->render("path", $id." ".$var);
+    public function getOneProduct($id):Response{
+        return $this->render(__DIR__ . '/views/product.html.php', ["id" => $id]);
     }
 }
