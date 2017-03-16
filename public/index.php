@@ -8,6 +8,8 @@
 use xbuw\framework\Application;
 
 $loader = require '../vendor/autoload.php';
+$loader->addPsr4("Shop\\", dirname(__FILE__).'/../src/');
 
 $page = new Application();
+$page->run();
 echo "hi from shop index</br>";
