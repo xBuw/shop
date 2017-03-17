@@ -18,6 +18,6 @@ use xbuw\framework\Response\Response;
 class ProductController extends Controller
 {
     public function getOneProduct($id):Response{
-        return $this->render(__DIR__ . '/views/product.html.php', ["id" => $id]);
+        return $this->render(__DIR__ . '/views/product.html.php', ["id" => $id], true);
     }
 }
