@@ -17,13 +17,20 @@ use xbuw\framework\Response\Response;
  */
 class ProductController extends Controller
 {
-    public function getOneProduct($id):Response
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function getOneProduct($id): Response
     {
         return $this->render(__DIR__ . '/views/oneProduct.html.php', ["id" => $id], true);
     }
 
-    public function getAllProduct():Response
+    /**
+     * @return Response
+     */
+    public function getAllProduct(): Response
     {
-        return $this->render(__DIR__ . '/views/allProduct.html.php', [], true);
+        return $this->render(__DIR__ . '/views/allProduct.html.php', []);
     }
 }
