@@ -9,7 +9,6 @@ use xbuw\framework\Application;
 
 $loader = require '../vendor/autoload.php';
 $loader->addPsr4("Shop\\", dirname(__FILE__).'/../src/');
-
-$page = new Application();
+$config = parse_ini_file(dirname(__FILE__) . "/../config/routes.ini", true);
+$page = new Application($config);
 $page->run();
-echo "hi from shop index</br>";
