@@ -3,6 +3,8 @@
 namespace Shop;
 
 use xbuw\framework\Controller\Controller;
+use xbuw\framework\Injector\Injector;
+use xbuw\framework\Request\Request;
 use xbuw\framework\Response\Response;
 
 /**
@@ -13,23 +15,26 @@ class ProductController extends Controller
 {
 
     private $connection;
+    private $request;
 
     /**
      * ProductController constructor.
      */
     function __construct()
     {
-        $this->connection = pg_connect("host=localhost dbname=test_db user=postgres password=ilikevolley")
+        $this->request = Request::getRequest();
+        $this->connection = pg_connect("host=localhost " .
+            "dbname=test_db user=postgres password=none")
         or die('Could not connect:' . pg_last_error());
     }
 
     /**
-     * @param $id
+     * Get one product
      * @return Response
      */
-    public function getOneProduct($id): Response
+    public function getOneProduct(): Response
     {
-        $query = "select * from books where id=" . $id;
+        $query = "select * from books where id=" . $this->request->id;
         $result = pg_query($this->connection, $query) or die('Error query');
 
         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
@@ -41,6 +46,7 @@ class ProductController extends Controller
     }
 
     /**
+     * Get all product
      * @return Response
      */
     public function getAllProduct(): Response
@@ -48,11 +54,22 @@ class ProductController extends Controller
         $query = "select * from books";
         $result = pg_query($this->connection, $query) or die('Error query');
 
-        $resultArr[] = null;
+        $resultArr = [];
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             $resultArr[] = $line;
         }
-
+        //test DI
+        /*
+        $injector = new Injector();
+        $config = require dirname(__FILE__)."/../config/config.php";
+        $injector::setConfig($config);
+        try {
+            $test = $injector::make('TestContract');
+        } catch (\Exception $e){
+            echo $e->getMessage();
+        }
+        echo $test->out();
+*/
         pg_free_result($result);
         pg_close($this->connection);
 
@@ -60,21 +77,20 @@ class ProductController extends Controller
     }
 
     /**
-     * @param $name
-     * @param $author
-     * @param $year
+     * Set one product
      * @return Response
      */
-    public function setOneProduct($name, $author, $year): Response
+    public function setOneProduct(): Response
     {
         $array = [
-            'name' => $name,
-            'author' => $author,
-            'year' => $year
+            'name' => $this->request->name,
+            'author' => $this->request->author,
+            'year' => $this->request->year
         ];
+
         pg_insert($this->connection, "books", $array);
         pg_close($this->connection);
-
         return $this->render(__DIR__ . '/views/setOneProduct.html.php', ["array" => $array]);
+
     }
 }
