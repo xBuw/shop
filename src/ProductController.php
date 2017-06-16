@@ -3,7 +3,6 @@
 namespace Shop;
 
 use xbuw\framework\Controller\Controller;
-use xbuw\framework\Request\Request;
 use xbuw\framework\Response\Response;
 
 /**
@@ -14,26 +13,23 @@ class ProductController extends Controller
 {
 
     private $connection;
-    private $request;
 
     /**
      * ProductController constructor.
      */
     function __construct()
     {
-        $this->request = Request::getRequest();
-        $this->connection = pg_connect("host=localhost " .
-            "dbname=test_db user=postgres password=ilikevolley")
+        $this->connection = pg_connect("host=localhost dbname=test_db user=postgres password=ilikevolley")
         or die('Could not connect:' . pg_last_error());
     }
 
     /**
-     * Get one product
+     * @param $id
      * @return Response
      */
-    public function getOneProduct(): Response
+    public function getOneProduct($id): Response
     {
-        $query = "select * from books where id=" . $this->request->id;
+        $query = "select * from books where id=" . $id;
         $result = pg_query($this->connection, $query) or die('Error query');
 
         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
@@ -45,7 +41,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Get all product
      * @return Response
      */
     public function getAllProduct(): Response
@@ -53,7 +48,7 @@ class ProductController extends Controller
         $query = "select * from books";
         $result = pg_query($this->connection, $query) or die('Error query');
 
-        $resultArr = [];
+        $resultArr[] = null;
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             $resultArr[] = $line;
         }
@@ -65,20 +60,21 @@ class ProductController extends Controller
     }
 
     /**
-     * Set one product
+     * @param $name
+     * @param $author
+     * @param $year
      * @return Response
      */
-    public function setOneProduct(): Response
+    public function setOneProduct($name, $author, $year): Response
     {
         $array = [
-            'name' => $this->request->name,
-            'author' => $this->request->author,
-            'year' => $this->request->year
+            'name' => $name,
+            'author' => $author,
+            'year' => $year
         ];
-
         pg_insert($this->connection, "books", $array);
         pg_close($this->connection);
-        return $this->render(__DIR__ . '/views/setOneProduct.html.php', ["array" => $array]);
 
+        return $this->render(__DIR__ . '/views/setOneProduct.html.php', ["array" => $array]);
     }
 }
