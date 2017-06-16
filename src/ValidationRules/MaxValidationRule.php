@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: xbuw
- * Date: 14.06.17
- * Time: 15:23
- */
 namespace Shop\ValidationRules;
 
 use xbuw\framework\Validation\AbstractValidationRule;
