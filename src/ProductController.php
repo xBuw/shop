@@ -3,7 +3,6 @@
 namespace Shop;
 
 use xbuw\framework\Controller\Controller;
-use xbuw\framework\Injector\Injector;
 use xbuw\framework\Request\Request;
 use xbuw\framework\Response\Response;
 
@@ -58,18 +57,7 @@ class ProductController extends Controller
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
             $resultArr[] = $line;
         }
-        //test DI
-        /*
-        $injector = new Injector();
-        $config = require dirname(__FILE__)."/../config/config.php";
-        $injector::setConfig($config);
-        try {
-            $test = $injector::make('TestContract');
-        } catch (\Exception $e){
-            echo $e->getMessage();
-        }
-        echo $test->out();
-*/
+
         pg_free_result($result);
         pg_close($this->connection);
 
