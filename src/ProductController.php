@@ -23,7 +23,7 @@ class ProductController extends Controller
     {
         $this->request = Request::getRequest();
         $this->connection = pg_connect("host=localhost " .
-            "dbname=test_db user=postgres password=none")
+            "dbname=test_db user=postgres password=ilikevolley")
         or die('Could not connect:' . pg_last_error());
     }
 
