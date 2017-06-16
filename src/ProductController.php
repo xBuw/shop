@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     function __construct()
     {
-        $this->connection = pg_connect("host=localhost dbname=test_db user=postgres password=ilikevolley")
+        $this->connection = pg_connect("host=localhost dbname=test_db user=postgres password=none")
         or die('Could not connect:' . pg_last_error());
     }
 
