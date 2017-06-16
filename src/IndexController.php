@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Стас
- * Date: 17.03.2017
- * Time: 11:42
- */
 
 namespace Shop;
-
 
 use xbuw\framework\Controller\Controller;
 use xbuw\framework\Response\Response;

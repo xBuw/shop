@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xbuw
- * Date: 16.06.17
- * Time: 15:08
- */
 
 namespace Shop\Middleware;
 
