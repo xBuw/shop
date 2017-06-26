@@ -21,7 +21,7 @@ class ProductController extends Controller
      * ProductController constructor.
      * Start Injector, Database connecting and call request.
      */
-    function __construct()
+    public function __construct()
     {
         Injector::setConfig(require dirname(__FILE__) . "/../config/injector.php");
         $this->connection = Injector::make('xbuw\framework\Database\DatabaseContract',
@@ -35,7 +35,7 @@ class ProductController extends Controller
      */
     public function getOneProduct(): Response
     {
-        $query = "select * from books where id=" . $this->request->id;
+        $query = "select * from books where books_id=" . $this->request->id;
         $result = $this->connection->query($query);
         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
         return $this->render(__DIR__ . '/views/oneProduct.html.php', ["array" => $line]);
@@ -62,13 +62,14 @@ class ProductController extends Controller
      */
     public function setOneProduct(): Response
     {
+
         $array = [
             'name' => $this->request->name,
             'author' => $this->request->author,
             'year' => $this->request->year
         ];
-
         $this->connection->insert("books", $array);
+
         return $this->render(__DIR__ . '/views/setOneProduct.html.php', ["array" => $array]);
 
     }
