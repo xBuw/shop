@@ -16,6 +16,10 @@
     {
       "type": "path",
       "url": "/home/projects/test-framework"
+    },
+    {
+      "type": "path",
+      "url": "../framework"
     }
   ]
 }
